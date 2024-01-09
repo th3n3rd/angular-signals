@@ -13,10 +13,7 @@ export class AppComponent {
   guest = signal('Friend');
 
   constructor() {
-    // this represent an example of a computation that happens async
-    setTimeout(() => {
-      console.log("running callback async");
-      this.guest.set('Everybody Else');
-    }, 1000);
+    // this represents an example of a computation that happens async
+    setTimeout(() => this.guest.set('Everybody Else'), 1000);
   }
 }

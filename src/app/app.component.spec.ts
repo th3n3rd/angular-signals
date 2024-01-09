@@ -1,26 +1,28 @@
-import { TestBed, fakeAsync, flush } from '@angular/core/testing';
+import { fakeAsync, flush } from '@angular/core/testing';
 import { AppComponent } from './app.component';
-
-const { configureTestingModule, createComponent } = TestBed;
-
+import { render, screen } from '@testing-library/angular';
 describe('AppComponent', () => {
 
-  beforeEach(async () => {
-    await configureTestingModule({
-      imports: [AppComponent],
-    }).compileComponents();
+  it('initially greets a friend', async () => {
+    await render(AppComponent);
+    expect(screen.getByText('Hello Friend!')).toBeDefined();
   });
 
-  it('initially greets a friend', () => {
-    const fixture = createComponent(AppComponent);
-    fixture.detectChanges();
-    expect(fixture.nativeElement.textContent).toContain('Hello Friend!');
-  });
-
-  it('eventually greets everybody else', fakeAsync(() => {
-    const fixture = createComponent(AppComponent);
+  it('eventually greets everybody else', fakeAsync(async () => {
+    const { fixture } = await render(AppComponent);
     flush();
     fixture.detectChanges();
-    expect(fixture.nativeElement.textContent).toContain('Hello Everybody Else!');
+    expect(screen.getByText('Hello Everybody Else!')).toBeDefined();
   }));
+
+  it('eventually greets everybody else (alternative #1)', fakeAsync(async () => {
+    await render(AppComponent);
+    flush();
+    expect(await screen.findByText('Hello Everybody Else!', {}, { timeout: 2000 })).toBeDefined();
+  }));
+
+  it('eventually greets everybody else (alternative #2)', async () => {
+    await render(AppComponent);
+    expect(await screen.findByText('Hello Everybody Else!', {}, { timeout: 2000 })).toBeDefined();
+  });
 });
