@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
 
@@ -10,5 +10,13 @@ import { RouterOutlet } from '@angular/router';
   styleUrl: './app.component.css'
 })
 export class AppComponent {
-  title = 'angular-signals';
+  guest = signal('Friend');
+
+  constructor() {
+    // this represent an example of a computation that happens async
+    setTimeout(() => {
+      console.log("running callback async");
+      this.guest.set('Everybody Else');
+    }, 1000);
+  }
 }
