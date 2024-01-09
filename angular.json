@@ -79,7 +79,13 @@
               "zone.js/testing"
             ],
             "tsConfig": "tsconfig.spec.json",
+            "include": [
+              "src/test.ts",
+              "src/**/*.spec.ts",
+              "src/**/*.d.ts"
+            ],
             "assets": [
+              "src/mockServiceWorker.js",
               "src/favicon.ico",
               "src/assets"
             ],
